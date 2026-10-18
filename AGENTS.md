@@ -17,6 +17,31 @@ Before planning or modifying code:
 
 Treat ADRs as decision context, not as permanently unchangeable rules.
 
+## Specs and ADRs
+
+- Constitution (`.specify/memory/constitution.md`) = bylaws. Specs (`specs/NNN-feature/`) = work orders. ADRs (`docs/decisions/`) = case law.
+- A spec says what we build and how, for one feature (forward-looking). An ADR says what we already decided and why (backward-looking, outlives the feature).
+- Before writing a spec's plan: read `INDEX.md` and fill in the spec's "Applicable decisions" table.
+- After writing the plan: list "ADR candidates", meaning choices that someone could undo without knowing why. Draft each as a `Proposed` ADR in the same PR.
+- Never leave a durable technical choice only inside a spec or plan.
+
+## Keeping Specs Current
+
+A spec describes the current intent, not the original plan. Code that changes behavior without updating its spec makes the spec a lie, and the next agent will trust it.
+
+When a task or PR changes behavior covered by a spec in `specs/`:
+
+1. Find the spec: check the task, branch name, or PR for a `specs/NNN-...` reference; otherwise search `specs/` for the affected feature.
+2. Update the spec body (requirements, plan, tasks) so it describes the **new** truth. Do not leave the old value in place or only in a comment.
+3. Append a row to the spec's **Change log**: date, what changed, why, PR/commit, ADR (if any).
+4. Decide whether the change is a decision:
+   - Pass the "could someone undo this without knowing why" test, or touches an accepted ADR's constraints? Write or supersede an ADR.
+   - Otherwise (for example a box color changing red → blue), the spec change and change log entry are enough. No ADR.
+5. If the change contradicts a spec's "Applicable decisions" table, treat it as an ADR conflict (see above).
+6. Mark finished tasks done, and set `Status: Implemented` when all are complete.
+
+If the requested change is not yet reflected in the spec, update the spec in the **same PR** as the code, not afterward.
+
 ## Risk-Based Review
 
 | Change type | What the agent does |

@@ -16,12 +16,30 @@ It shows how to make architectural decisions discoverable by developers, coding 
 │   │   └── ADR-003-event-driven-processing.md
 │   └── examples/
 │       └── ADR-008-superseding-example.md # how to supersede a decision
+├── specs/                                 # spec-driven development (per feature)
+│   ├── SPEC-TEMPLATE.md
+│   └── 001-document-ingestion/spec.md     # example spec consuming ADR-001/002/003
+├── .specify/memory/constitution.md        # Spec Kit-style non-negotiable principles
 └── .github/
     ├── copilot-instructions.md            # repo-wide Copilot context + review rules
     ├── pull_request_template.md           # ADR impact fields
     └── instructions/
         └── architecture.instructions.md   # path-specific instructions
 ```
+
+## Constitution, specs, and ADRs
+
+| Artifact | Role | Question it answers | Direction |
+|---|---|---|---|
+| Constitution | Bylaws | What principles are non-negotiable? | Standing |
+| Spec | Work order | What are we building, and how, for this feature? | Forward |
+| ADR | Case law | What did we already decide, and why? | Backward |
+
+They connect in two places:
+1. **Specs read ADRs as constraints** before planning (the spec's "Applicable decisions" table).
+2. **Plans promote durable choices to ADRs** (the spec's "ADR candidates" list).
+
+Specs keep the layout Spec Kit uses (`specs/NNN-feature/`, `.specify/memory/constitution.md`), so you can add `plan.md` and `tasks.md` per feature or run Spec Kit on top.
 
 ## How to use this template
 1. Copy these files into your repository.
