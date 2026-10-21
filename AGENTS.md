@@ -22,8 +22,8 @@ Treat ADRs as decision context, not as permanently unchangeable rules.
 - Constitution (`.specify/memory/constitution.md`) = bylaws. Specs (`specs/NNN-feature/`) = work orders. ADRs (`docs/decisions/`) = case law.
 - A spec says what we build and how, for one feature (forward-looking). An ADR says what we already decided and why (backward-looking, outlives the feature).
 - Before writing a spec's plan: read `INDEX.md` and fill in the spec's "Applicable decisions" table.
-- After writing the plan: list "ADR candidates", meaning choices that someone could undo without knowing why. Draft each as a `Proposed` ADR in the same PR.
-- Never leave a durable technical choice only inside a spec or plan.
+- After writing the plan: list "ADR candidates", meaning only choices that meet the ADR threshold below. Most specs have zero or one. If unsure, do not write an ADR; note the choice in the spec's Plan or the PR and let a human decide.
+- Choices below the threshold may live in the spec's Plan section.
 
 ## Keeping Specs Current
 
@@ -42,6 +42,18 @@ When a task or PR changes behavior covered by a spec in `specs/`:
 
 If the requested change is not yet reflected in the spec, update the spec in the **same PR** as the code, not afterward.
 
+## When an ADR Is Warranted
+
+Write an ADR only for a big decision that meets at least one of these:
+
+- Expensive to reverse (weeks of rework, a data migration).
+- Crosses service or team boundaries, or changes a public contract.
+- Sets a security, compliance, cost, or availability posture.
+- Picks or replaces a core platform, framework, datastore, or hosting model.
+- Overrides or supersedes an existing Accepted ADR.
+
+Not ADRs: library choices, naming, refactors, bug fixes, UI tweaks, or anything reversible in a single PR. Record these in the spec, the PR description, or code comments.
+
 ## Risk-Based Review
 
 | Change type | What the agent does |
@@ -52,7 +64,9 @@ If the requested change is not yet reflected in the spec, update the spec in the
 
 ## Rules for Writing ADRs
 
-- Use `docs/decisions/ADR-TEMPLATE.md`.
+- Use `docs/decisions/ADR-TEMPLATE.md`. Keep it to one page; a few lines each for context, decision, and consequences.
+- Draft at most one `Proposed` ADR per PR, and state which threshold criterion it meets (see "When an ADR Is Warranted"). Otherwise ask.
+- `Proposed` ADRs not accepted within 30 days are closed as `Rejected` or folded into the spec.
 - Use the next free stable ID (`ADR-NNN`). Never reuse or renumber IDs.
 - AI-drafted ADRs must be `Status: Proposed`. Only a human confirms `Accepted`.
 - Never delete an ADR. Mark it `Superseded` and link to the replacement.
